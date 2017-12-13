@@ -1,4 +1,5 @@
-
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:url value="/login" var="loginUrl"/>
 <form action="${loginUrl}" method="post">
     <c:if test="${param.error != null}">
