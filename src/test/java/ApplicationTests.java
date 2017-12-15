@@ -66,8 +66,8 @@ public class ApplicationTests {
 
     @Test
     public void testSearch(){
-            User user = ldapDao.getUserByUid("test");
-            System.out.print(user.getCn()+"uid"+user.getUid());
+            User user = ldapDao.getUserByUid("jm");
+            System.out.print("cn="+user.getCn()+"    uid="+user.getUid());
     }
 
     @Test
@@ -76,6 +76,7 @@ public class ApplicationTests {
         user.setUid("jm");
         user.setCn("jm yin");
         user.setSn("yin");
+        user.setDescription("老司机");
         user.setUserPassword("123");
         ldapDao.addUser(user);
     }

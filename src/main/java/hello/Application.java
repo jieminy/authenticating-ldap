@@ -27,15 +27,7 @@ public class Application {
 //    public LdapTemplate ldapTemplate(){
 //        return new LdapTemplate(contextSource());
 //    }
-//    @Bean
-//    public LdapContextSource contextSource(){
-//        LdapContextSource ldapContextSource = new LdapContextSource();
-//        ldapContextSource.setUrl(ldapUrl);
-//        ldapContextSource.setBase(ldapBase);
-//        ldapContextSource.setUserDn(ldapUserDn);
-//        ldapContextSource.setPassword(ldapUserPwd);
-//        return ldapContextSource;
-//    }
+
     @Bean
     @ConfigurationProperties(prefix = "ldap.contextSource")
     public LdapContextSource contextSource(){
