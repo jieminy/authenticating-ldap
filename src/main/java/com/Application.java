@@ -1,33 +1,16 @@
-package hello;
+package com;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.LdapContextSource;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class Application {
-//    @Value("${ldap.url}")
-//    private String ldapUrl;
-//
-//    @Value("${ldap.base}")
-//    private String ldapBase;
-//
-//    @Value("${ldap.userDn}")
-//    private String ldapUserDn;
-//
-//    @Value("${ldap.userPwd}")
-//    private String ldapUserPwd;
-//
-//    @Bean
-//    public LdapTemplate ldapTemplate(){
-//        return new LdapTemplate(contextSource());
-//    }
-
     @Bean
     @ConfigurationProperties(prefix = "ldap.contextSource")
     public LdapContextSource contextSource(){
@@ -39,9 +22,15 @@ public class Application {
     public LdapTemplate ldapTemplate(LdapContextSource contextSource){
         return new LdapTemplate(contextSource);
     }
+
 //    @Bean
-//    public BCryptPasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
+//    public MessageSource messageSource() {
+//        final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+//        messageSource.setBasenames("classpath:/properties");
+//        messageSource.setUseCodeAsDefaultMessage(true);
+//        messageSource.setDefaultEncoding("UTF-8");
+//        messageSource.setCacheSeconds(5);
+//        return messageSource;
 //    }
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

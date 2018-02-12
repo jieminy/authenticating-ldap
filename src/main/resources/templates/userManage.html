@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/js/jquery-3.2.1.js"></script>
+    <script>
+    </script>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <div class="starter-template">
+        <h1></h1>
+        <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+    </div>
+    <table class="table table-hover">
+        <tr>
+            <th class="col-md-2">用户</th>
+            <th class="col-md-2">账号</th>
+            <th class="col-md-2">designer</th>
+            <th class="col-md-2">developer</th>
+            <th class="col-md-2">tester</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.cn}"></td>
+            <td th:text="${user.uid}"></td>
+            <td th:text="#{false}"></td>
+            <td th:utext="${user.roles.developer}? #{true} : #{false}"></td>
+            <td th:text="${user.roles.tester}? #{true} : #{false}"></td>
+     <!--       <div th:switch="${user.roles.designer}" >
+                <td th:case="true" >yes</td>
+                <td th:case="false">no</td>
+            </div>
+            <div th:switch="${user.roles.developer}" >
+                <td th:case="true" >yes</td>
+                <td th:case="false">no</td>
+            </div>
+            <div th:switch="${user.roles.tester}" >
+                <td th:case="true" >yes</td>
+                <td th:case="false">no</td>
+            </div>-->
+        </tr>
+    </table>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>

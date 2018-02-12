@@ -17,9 +17,10 @@
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.*;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.*;
 
-import hello.entity.User;
-import hello.Application;
-import hello.dao.impl.UserDaoImpl;
+import com.Service.impl.UserService;
+import com.entity.User;
+import com.Application;
+import com.dao.impl.UserDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.FormLoginRequestBuilder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.*;
 
 /**
  * 
@@ -42,7 +45,10 @@ public class ApplicationTests {
 
 
     @Autowired
-    private UserDaoImpl ldapDao;
+    private UserDao ldapDao;
+
+    @Autowired
+    private UserService userService;
 
     @Test
     public void loginWithValidUserThenAuthenticated() throws Exception {
@@ -67,44 +73,105 @@ public class ApplicationTests {
     @Test
     public void testSearch(){
             User user = ldapDao.getUserByUid("jm");
-            System.out.print("cn="+user.getCn()+"    uid="+user.getUid());
     }
 
     @Test
     public void testAdd(){
         User user = new User();
-        user.setUid("jm");
+        user.setUsername("yinjm");
         user.setCn("jm yin");
         user.setSn("yin");
-        user.setDescription("老司机");
-        user.setUserPassword("123");
-        ldapDao.addUser(user);
+        user.setPassword("123");
+        try {
+            ldapDao.addUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void addGroup(){
+        try {
+            ldapDao.addGroup("ou=testers, ou=Groups");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void createGroupRelations(){
+        try {
+            Map<String,String> map = new HashMap<>();
+            map.put("cn","developers");
+            map.put("ou","UserRelations");
+            map.put("member","guanxin");
+            map.put("type","Users");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void testName(){
+
+    }
+    @Test
+    public void createUserRelations(){
+        try {
+          ldapDao.createUserRelation("guanxin","developers");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void addUserRelations(){
+        try {
+            List<String> list = new ArrayList<>();
+            list.add("zhangsan");
+            ldapDao.addUserRelation("developers",list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void removeUserRelations(){
+        try {
+            List<String> list = new ArrayList<>();
+            list.add("guanxin");
+            ldapDao.removeUserRelation("developers",list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void addGroupRelations(){
+        try {
+            List<String> list= new ArrayList<>();
+            list.add("developers");
+            list.add("designers");
+            ldapDao.addGroupRelation("programers",list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @Test
     public void testDel(){
-        User user = new User();
-        user.setUid("jm");
-        ldapDao.deleteUser(user);
+        ldapDao.deleteGroupRelation();
     }
     @Test
     public void testUpdate(){
         User user = new User();
-        user.setUid("jm");
+        user.setUsername("jm");
         user.setCn("jm yin");
         user.setSn("yin");
-        user.setUserPassword("123");
-        user.setDescription("是不是傻");
+        user.setPassword("123");
         ldapDao.updateDesription(user);
     }
 
     @Test
     public void testRebindUpdate(){
         User user = new User();
-        user.setUid("jm");
+        user.setUsername("jm");
         user.setCn("jm xxx");
         user.setSn("yin");
-        user.setUserPassword("123");
-        user.setDescription("又傻又2");
+        user.setPassword("123");
         ldapDao.updateUser(user);
     }
 
@@ -114,5 +181,10 @@ public class ApplicationTests {
         if(bl){
             System.out.print("成功认证");
         }
+    }
+
+    @Test
+    public void testGetAllUsers(){
+        List<User> users = userService.getAllUsers();
     }
 }
