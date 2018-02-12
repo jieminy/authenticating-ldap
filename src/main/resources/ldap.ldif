@@ -1,0 +1,117 @@
+version: 1
+dn: o=SunsetComputers, c=sr
+objectClass: top
+objectClass: organization
+o: SunsetComputers
+
+version: 1
+dn: ou=Groups, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: organizationalUnit
+ou: Groups
+
+dn: ou=Users, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: organizationalUnit
+ou: Users
+
+dn: ou=GroupRelations, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: organizationalUnit
+ou: GroupRelations
+
+dn: ou=UserRelations, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: organizationalUnit
+ou: UserRelations
+
+dn: ou=programers, ou=Groups, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: organizationalUnit
+ou: programers
+
+dn: ou=designers, ou=Groups, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: organizationalUnit
+ou: designers
+
+dn: ou=developers, ou=Groups, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: organizationalUnit
+ou: developers
+
+dn: ou=testers, ou=Groups, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: organizationalUnit
+ou: codeDesigners
+
+dn: userid=sasaboy, ou=Users, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: inetOrgPerson
+cn: Sasa Smith
+givenname: Sale
+initials: S.S.
+mail: sasasmith@sunsetcomputers.com
+mobile: 067/66688844
+postaladdress: Tm92aSBTYWQsIFNla3NwaXJvdmEgNS8xMDAJ
+postofficebox: 21000
+sn: Smith
+st: Serbia
+street: 6th street 74
+title: B.S.C. in E.E.
+userid: sasaboy
+userpassword:: c2FzYWJveQ==
+
+dn: userid=simbe, ou=Users, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: inetOrgPerson
+cn: Sean Young
+givenname: Sean
+initials: S.Y.
+mail: seanyoung@sunsetcomputers.com
+mobile: 067/88833366
+postaladdress: Tm92aSBTYWQsIFNla3NwaXJvdmEgNS8xMDAJ
+postofficebox: 21000
+sn: Young
+st: Serbia
+street: 4th street 27
+title: B.S.C. in E.E.
+userid: simbe
+userpassword:: c2ltYmU=
+
+dn: cn=testers, ou=UserRelations, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: groupOfNames
+cn: testers
+member: userid=sasaboy, ou=Users, o=SunsetComputers, c=sr
+
+dn: cn=developers, ou=UserRelations, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: groupOfNames
+cn: developers
+member: userid=simbe, ou=Users, o=SunsetComputers, c=sr
+
+dn: cn=SunsetComputers, ou=GroupRelations, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: groupOfNames
+cn: SunsetComputers
+member: ou=programers, ou=Groups, o=SunsetComputers, c=sr
+
+dn: cn=programers, ou=GroupRelations, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: groupOfNames
+cn: programers
+member: ou=designers, ou=Groups, o=SunsetComputers, c=sr
+member: ou=developers, ou=Groups, o=SunsetComputers, c=sr
+
+dn: cn=designers, ou=GroupRelations, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: groupOfNames
+cn: designers
+member: ou=testers, ou=Groups, o=SunsetComputers, c=sr
+
+dn: cn=developers, ou=GroupRelations, o=SunsetComputers, c=sr
+objectClass: top
+objectClass: groupOfNames
+cn: developers
+member: ou=testers, ou=Groups, o=SunsetComputers, c=sr
