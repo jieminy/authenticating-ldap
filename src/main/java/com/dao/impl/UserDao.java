@@ -1,5 +1,6 @@
 package com.dao.impl;
 
+import com.common.Globals;
 import com.dao.IUserDao;
 import com.entity.Roles;
 import com.entity.User;
@@ -38,17 +39,9 @@ public class UserDao implements IUserDao{
         String filter = "(objectClass=inetOrgPerson)";
         List<User> userList = ldapTemplate.search("ou=Users", filter, new UserAttributesMapper());
         for (User user : userList) {
-            filter = "(member= uid="+user.getUsername()+", ou=Users, dc=maxcrc, dc=com)";
-            List<Roles> rolesList = ldapTemplate.search("ou=UserRelations", filter, new RolesAttributesMapper());
-            for (Roles role : rolesList) {
-                if(role.isDeveloper()){
-                    user.getRoles().setDeveloper(true);
-                }else if(role.isDesigner()){
-                    user.getRoles().setDesigner(true);
-                }else if(role.isTester()){
-                    user.getRoles().setTester(true);
-                }
-            }
+            filter = "(member= uid="+user.getUid()+", ou=Users, dc=maxcrc, dc=com)";
+            List<Globals.Role> roles = ldapTemplate.search("ou=UserRelations", filter, new RoleAttributesMapper());
+            user.setRole(roles.get(0));
         }
         return userList;
     }
@@ -142,7 +135,7 @@ public class UserDao implements IUserDao{
             User user = new User();
             Attribute attribute = attributes.get("uid");
             if(attribute != null){
-                user.setUsername((String) attribute.get());
+                user.setUid((String) attribute.get());
             }
             attribute = attributes.get("sn");
             if(attribute != null){
@@ -175,21 +168,23 @@ public class UserDao implements IUserDao{
             return user;
         }
     }
-    private class RolesAttributesMapper implements AttributesMapper{
+    private class RoleAttributesMapper implements AttributesMapper{
 
         @Override
         public Object mapFromAttributes(Attributes attributes) throws NamingException {
-            Roles roles = new Roles();
+            Globals.Role role = Globals.Role.TESTER;
             Attribute attr = attributes.get("cn");
-            String role = (String)attr.get();
-            if(role.equals("developers")){
-                roles.setDeveloper(true);
-            }else if("designers".equals(role)){
-                roles.setDesigner(true);
-            }else if("testers".equals(role)){
-                roles.setTester(true);
+            String strRole = (String)attr.get();
+            if("testers".equals(strRole)){
+                role = Globals.Role.TESTER;
+            }else if("developers".equals(strRole)){
+                role = Globals.Role.DEVELOPER;
+            }else if("designers".equals(strRole)){
+                role = Globals.Role.DESIGNER;
+            }else if("programer".equals(strRole)){
+                role = Globals.Role.PROGRAMER;
             }
-            return roles;
+            return role;
         }
     }
 
@@ -269,7 +264,7 @@ public class UserDao implements IUserDao{
      * @return
      */
     private String buildDn(User user){
-        return "userid="+user.getUsername()+",ou=Users";
+        return "userid="+user.getUid()+",ou=Users";
     }
 
     /***
@@ -285,8 +280,8 @@ public class UserDao implements IUserDao{
         //用户属性
         Attributes attributes = new BasicAttributes();
         attributes.put(basicAttribute);
-        if(user.getUsername()!=null){
-            attributes.put("userid",user.getUsername());
+        if(user.getUid()!=null){
+            attributes.put("userid",user.getUid());
         }
         if(user.getPassword()!=null){
             attributes.put("userPassword",user.getPassword());

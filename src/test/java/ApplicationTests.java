@@ -78,7 +78,7 @@ public class ApplicationTests {
     @Test
     public void testAdd(){
         User user = new User();
-        user.setUsername("yinjm");
+        user.setUid("yinjm");
         user.setCn("jm yin");
         user.setSn("yin");
         user.setPassword("123");
@@ -115,7 +115,7 @@ public class ApplicationTests {
     @Test
     public void createUserRelations(){
         try {
-          ldapDao.createUserRelation("guanxin","developers");
+          ldapDao.createUserRelation("admin","testers");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -158,7 +158,7 @@ public class ApplicationTests {
     @Test
     public void testUpdate(){
         User user = new User();
-        user.setUsername("jm");
+        user.setUid("jm");
         user.setCn("jm yin");
         user.setSn("yin");
         user.setPassword("123");
@@ -168,7 +168,7 @@ public class ApplicationTests {
     @Test
     public void testRebindUpdate(){
         User user = new User();
-        user.setUsername("jm");
+        user.setUid("jm");
         user.setCn("jm xxx");
         user.setSn("yin");
         user.setPassword("123");

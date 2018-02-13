@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.common.Globals;
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.Max;
@@ -12,10 +13,10 @@ public class User {
     private String cn;
     private String sn;
     @NotNull
-    private String username;
+    private String uid;
     @Max(message = "最大长度不能超过10",value = 10l)
     private String password;
-    private Roles roles = new Roles();
+    private Globals.Role role;
     @Email(message = "必须为邮箱格式")
     private String mail;
     private String mobile;
@@ -67,8 +68,8 @@ public class User {
 
     public User(){}
 
-    public User(String username, String password){
-        this.username = username;
+    public User(String uid, String password){
+        this.uid = uid;
         this.password = password;
     }
 
@@ -80,12 +81,12 @@ public class User {
         this.cn = cn;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUid() {
+        return uid;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getSn() {
@@ -104,11 +105,11 @@ public class User {
         this.password = password;
     }
 
-    public Roles getRoles() {
-        return roles;
+    public Globals.Role getRole() {
+        return role;
     }
 
-    public void setRoles(Roles roles) {
-        this.roles = roles;
+    public void setRole(Globals.Role role) {
+        this.role = role;
     }
 }

@@ -25,10 +25,10 @@
         <tr th:each="user : ${users}">
             <td th:text="${user.cn}"></td>
             <td th:text="${user.uid}"></td>
-            <td th:text="#{false}"></td>
-            <td th:utext="${user.roles.developer}? #{true} : #{false}"></td>
-            <td th:text="${user.roles.tester}? #{true} : #{false}"></td>
-     <!--       <div th:switch="${user.roles.designer}" >
+            <!--<td th:text="#{false}"></td>-->
+            <!--<td th:utext="${user.roles.developer}? #{true} : #{false}"></td>-->
+            <!--<td th:text="${user.roles.tester}? #{true} : #{false}"></td>-->
+            <div th:switch="${user.roles.designer}" >
                 <td th:case="true" >yes</td>
                 <td th:case="false">no</td>
             </div>
@@ -39,7 +39,7 @@
             <div th:switch="${user.roles.tester}" >
                 <td th:case="true" >yes</td>
                 <td th:case="false">no</td>
-            </div>-->
+            </div>
         </tr>
     </table>
 </div>
